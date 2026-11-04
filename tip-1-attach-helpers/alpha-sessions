@@ -1,0 +1,3 @@
+# ABOUTME: One line of the file the sync script writes and .bashrc sources on each client.
+# ABOUTME: [...] marks skipped lines, or skipped text inside a line. See the README.
+alias portfolio-agentic-covenants='ncs portfolio-agentic-covenants /home/michael/repos/portfolio/agentic-covenants'

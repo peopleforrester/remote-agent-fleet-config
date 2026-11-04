@@ -1,0 +1,11 @@
+# ABOUTME: Excerpt of the host's crontab: agent upkeep that runs with every laptop asleep.
+# ABOUTME: [...] marks skipped lines, or skipped text inside a line. See the README.
+# Daily durable snapshot of ~/.claude/projects (Anthropic prunes it)
+30 4 * * * /home/michael/scripts/claude-session-snapshot.sh [...]
+[...]
+# Stop agent sessions idle >4d. Runs after the 4:30 snapshot so transcripts are archived first.
+0 5 * * * [...] ${R1}/scripts/reap-idle-sessions.sh --apply [...]
+[...]
+# [...] monthly workflow refresh [...]
+# claude -p with a $25 cap and 60 min timeout; commits to staging, exits 1 without committing on any failure.
+0 6 1 * * [...] uv run wk refresh [...]

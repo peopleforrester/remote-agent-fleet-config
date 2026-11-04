@@ -1,0 +1,6 @@
+# ABOUTME: Excerpt of the client's ~/.ssh/config entry for the always-on host alpha.
+# ABOUTME: [...] marks skipped lines, or skipped text inside a line. See the README.
+Host alpha
+[...]
+  ServerAliveInterval 30
+  ServerAliveCountMax 3

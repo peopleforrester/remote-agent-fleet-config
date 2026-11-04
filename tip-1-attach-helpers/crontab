@@ -1,0 +1,3 @@
+# ABOUTME: The client crontab line that reruns the sync every 30 minutes.
+# ABOUTME: [...] marks skipped lines, or skipped text inside a line. See the README.
+*/30 * * * * /home/michael/scripts/sync-alpha-sessions.sh [...]
