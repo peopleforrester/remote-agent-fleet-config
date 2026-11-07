@@ -110,7 +110,7 @@ alias portfolio-agentic-covenants='ncs portfolio-agentic-covenants /home/michael
 
 **tmux settings that follow whichever screen you're on.** Coding agents are
 capable, untrusted software. Give them a box that holds only
-the code, not your browser sessions and saved logins: a server, an old
+the code and narrowly scoped tokens, not your browser sessions and saved logins: a server, an old
 laptop running Debian, or a Raspberry Pi, on a private network such as
 Tailscale. It never sleeps, and every screen becomes a thin client.
 
