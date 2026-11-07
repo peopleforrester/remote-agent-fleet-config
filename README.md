@@ -294,6 +294,12 @@ rsync -a "$SRC" "$LIVE/" 2>>"$LOG"
   first, then anything that removes.
 - Once a month a headless agent run (`claude -p`) refreshes notes with a cost
   cap and a timeout, and commits to a staging branch or not at all.
+- An aside on that cap: `--max-budget-usd 25` stops the run once the CLI's
+  own estimate of its API spend reaches $25. The estimate is worked out on
+  your machine from token counts, so it can differ from the bill, and the run
+  stops after the step that crossed the line, so spend can pass the cap. Treat
+  it as a tripwire, leave headroom, and set a hard spending limit on the key
+  or the account as well.
 
 ## License
 
