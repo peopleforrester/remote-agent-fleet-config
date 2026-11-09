@@ -24,17 +24,73 @@ hosted options to compare with are in [RESOURCES.md](RESOURCES.md).
 - Paths under `/home/michael` are the author's; put your own home and repo
   tree in their place.
 
-## Tip 1: Get really good at one workflow before you run a hundred
+## Tip 1: Structure your work
 
 ### What it fixes
 
-A hundred agents multiply whatever one agent does, mistakes included. Get one
-repo's workflow right first: rules in a file the agent reads, CI on every push,
+Organize before you automate. Group repos by project, business or topic,
+and give each group a knowledge repo that remembers how its work was done, so
+a new project starts from what the last one learned. A finished project's repo
+moves to its group's archive; the knowledge stays.
+
+**Attach helpers generated from the repo tree.** Group repos by what they
+belong to: start with two folders, personal and
+professional, and let the tree grow. With one tmux session per repo there are a hundred sessions, and nobody
+should be typing their names or keeping a list of them by hand. A list kept by
+hand is wrong by the next clone.
+
+### The excerpt
+
+[`tip-1-attach-helpers/sync-alpha-sessions.sh`](tip-1-attach-helpers/sync-alpha-sessions.sh)
+
+```bash
+    # Alias format: group-reponame [...]
+    alias_name="${norm_group}-${norm_leaf}"
+
+    # Session name matches alias name for simplicity
+    session_name="${alias_name}"
+[...]
+    ALIASES+=("alias ${alias_name}='ncs ${session_name} ${repo_path}'")
+```
+
+[`tip-1-attach-helpers/alpha-sessions`](tip-1-attach-helpers/alpha-sessions)
+
+```bash
+alias portfolio-agentic-covenants='ncs portfolio-agentic-covenants /home/michael/repos/portfolio/agentic-covenants'
+```
+
+[`tip-1-attach-helpers/crontab`](tip-1-attach-helpers/crontab)
+
+```cron
+*/30 * * * * /home/michael/scripts/sync-alpha-sessions.sh [...]
+```
+
+### How to adapt it
+
+- Keep repos in one tree on the host, a group directory and then the repo:
+  `~/repos/<group>/<repo>`. The script lists that tree over ssh from the
+  client and writes one alias per repo, named group dash repo, into a file
+  that `.bashrc` sources.
+- Every alias calls the same function, `ncs`, with the session name and the
+  repo path (tip 4). The tmux session has the alias's name, so the alias,
+  the session and tab completion all read one list.
+- Run the script from cron on each client, as the crontab line does every
+  30 minutes, so a repo cloned in the morning has an alias by lunch.
+- Leave a directory out by dropping a `.no-terminal` file in it.
+
+## Tip 2: Master one workflow before you run a hundred
+
+### What it fixes
+
+A hundred agents multiply whatever one agent does, mistakes included. Run one
+project hard, to completion, before you scale; one of each kind you need (code,
+an integration, a system) if their access differs. Get one repo's workflow
+right first: rules in a file the agent reads, CI on every push,
 and hooks that check what the agent does as it does it.
 
 ### The excerpt
 
-[`tip-1-one-workflow/settings.json`](tip-1-one-workflow/settings.json)
+[`tip-2-one-workflow/settings.json`](tip-2-one-workflow/settings.json)
 
 ```json
         "matcher": "Bash",
@@ -58,55 +114,6 @@ and hooks that check what the agent does as it does it.
 - Where a command-line tool exists, prefer it to an MCP server. Each agent
   session starts its own copy of every stdio MCP server it is configured
   with, so a hundred sessions run a hundred copies.
-
-## Tip 2: Give your work a shape the tools can read
-
-### What it fixes
-
-**Attach helpers generated from the repo tree.** Group repos by what they
-belong to: start with two folders, personal and
-professional, and let the tree grow. With one tmux session per repo there are a hundred sessions, and nobody
-should be typing their names or keeping a list of them by hand. A list kept by
-hand is wrong by the next clone.
-
-### The excerpt
-
-[`tip-2-attach-helpers/sync-alpha-sessions.sh`](tip-2-attach-helpers/sync-alpha-sessions.sh)
-
-```bash
-    # Alias format: group-reponame [...]
-    alias_name="${norm_group}-${norm_leaf}"
-
-    # Session name matches alias name for simplicity
-    session_name="${alias_name}"
-[...]
-    ALIASES+=("alias ${alias_name}='ncs ${session_name} ${repo_path}'")
-```
-
-[`tip-2-attach-helpers/alpha-sessions`](tip-2-attach-helpers/alpha-sessions)
-
-```bash
-alias portfolio-agentic-covenants='ncs portfolio-agentic-covenants /home/michael/repos/portfolio/agentic-covenants'
-```
-
-[`tip-2-attach-helpers/crontab`](tip-2-attach-helpers/crontab)
-
-```cron
-*/30 * * * * /home/michael/scripts/sync-alpha-sessions.sh [...]
-```
-
-### How to adapt it
-
-- Keep repos in one tree on the host, a group directory and then the repo:
-  `~/repos/<group>/<repo>`. The script lists that tree over ssh from the
-  client and writes one alias per repo, named group dash repo, into a file
-  that `.bashrc` sources.
-- Every alias calls the same function, `ncs`, with the session name and the
-  repo path (tip 4). The tmux session has the alias's name, so the alias,
-  the session and tab completion all read one list.
-- Run the script from cron on each client, as the crontab line does every
-  30 minutes, so a repo cloned in the morning has an alias by lunch.
-- Leave a directory out by dropping a `.no-terminal` file in it.
 
 ## Tip 3: Get your agents off your laptop
 
@@ -150,7 +157,7 @@ set-hook -g client-resized "resize-window -A"
 - Attaching with `-D` (tip 2) leaves one client per session, so that size is
   the screen in front of you.
 
-## Tip 4: Connection management you never have to think about
+## Tip 4: Automate your connections
 
 ### What it fixes
 
@@ -252,15 +259,18 @@ restore() {
 - On another terminal, keep the idea: generate one tab per session from the
   same list, and make each tab run `ncs`.
 
-## Tip 5: Then go further: loops, evals and goals
+## Tip 5: From workflows to a dispatcher
 
 ### What it fixes
 
 **Cron-driven orchestration that keeps working while you're on a plane.**
 If the host never sleeps, the schedule belongs on the host, not on a laptop
 in an overhead bin. Cron on a workstation stops when its lid closes. Once the schedule runs without you, a headless
-agent run with a cost cap is the first agentic loop; evaluations, better
-tests and goals for each run come after.
+agent run with a cost cap is the first agentic loop. The step after is a
+dispatcher: one service that reads the GitHub issues across your account and
+sends agents to work them, tested and through staging before anything merges.
+It needs a dependency graph, a knowledge graph and one database as its source of
+truth.
 
 ### The excerpt
 
