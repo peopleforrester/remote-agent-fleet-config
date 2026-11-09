@@ -11,6 +11,10 @@ thin clients that attach over ssh from Windows Terminal and WSL. The machines
 are labeled as on the slides: **alpha** is the always-on host, **beta** and
 **right** are the workstations.
 
+For a complete setup you can run, from one empty Debian 13 server to tip 5 in
+about 30 minutes, follow [the quickstart](QUICKSTART.md). The tools and the
+hosted options to compare with are in [RESOURCES.md](RESOURCES.md).
+
 ## Reading the excerpts
 
 - These are excerpts, not drop-in scripts. `[...]` marks skipped lines, or
@@ -137,13 +141,14 @@ set-hook -g client-resized "resize-window -A"
 - `window-size latest` sizes each window to the client with the most recent
   activity, and `aggressive-resize on` applies that per window instead of per
   session.
-- Both hooks run `resize-window -A`, which fits the largest attached client:
+- Both hooks run `resize-window -A`, which sizes the window to the largest
+  session containing it:
   `client-attached` on every attach, `client-resized` when an attached
   client's terminal changes size. Keep both. `resize-window` switches the
   window to a manual size, so with only the attach hook a window stays at the
   size it had on attach.
-- Attaching with `-D` (tip 2) leaves one client per session, so the largest
-  attached client is the screen in front of you.
+- Attaching with `-D` (tip 2) leaves one client per session, so that size is
+  the screen in front of you.
 
 ## Tip 4: Connection management you never have to think about
 
@@ -265,8 +270,9 @@ tests and goals for each run come after.
 # Daily durable snapshot of ~/.claude/projects (Anthropic prunes it)
 30 4 * * * /home/michael/scripts/claude-session-snapshot.sh [...]
 [...]
-# Stop agent sessions idle >4d. Runs after the 4:30 snapshot so transcripts are archived first.
-0 5 * * * [...] ${R1}/scripts/reap-idle-sessions.sh --apply [...]
+# Stop agent sessions idle >4d (reaper class stale-agent, #384). Runs after the 4:30 snapshot so transcripts are archived first.
+[...]
+0 5 * * * [...] ${R1}/scripts/root-tools/reaper.py [...]
 [...]
 # [...] monthly workflow refresh [...]
 # claude -p with a $25 cap and 60 min timeout; commits to staging, exits 1 without committing on any failure.
