@@ -3,9 +3,9 @@
 # Daily durable snapshot of ~/.claude/projects (Anthropic prunes it)
 30 4 * * * /home/michael/scripts/claude-session-snapshot.sh [...]
 [...]
-# Stop agent sessions idle >4d (reaper class stale-agent, #384). Runs after the 4:30 snapshot so transcripts are archived first.
+# Stop agent sessions idle >4d [...] Runs after the 4:30 snapshot so transcripts are archived first.
 [...]
-0 5 * * * [...] ${R1}/scripts/root-tools/reaper.py [...]
+0 5 * * * [...] ${R1}/scripts/[...]
 [...]
 # [...] monthly workflow refresh [...]
 # claude -p with a $25 cap and 60 min timeout; commits to staging, exits 1 without committing on any failure.

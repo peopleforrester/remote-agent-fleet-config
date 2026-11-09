@@ -154,7 +154,7 @@ set-hook -g client-resized "resize-window -A"
   client's terminal changes size. Keep both. `resize-window` switches the
   window to a manual size, so with only the attach hook a window stays at the
   size it had on attach.
-- Attaching with `-D` (tip 2) leaves one client per session, so that size is
+- Attaching with `-D` (tip 4) leaves one client per session, so that size is
   the screen in front of you.
 
 ## Tip 4: Automate your connections
@@ -247,7 +247,7 @@ restore() {
   competes for it.
 - This is for Windows Terminal with WSL. Each generated profile runs `ncs`
   for its session through `bash -ic`, so `.bashrc`, and with it the aliases
-  and `ncs` from tips 2 and 4, is loaded. Set `WSL_DISTRO` to your
+  and `ncs` from tips 1 and 4, is loaded. Set `WSL_DISTRO` to your
   distribution.
 - The same tree walk writes `restore-workflow.ps1`: one
   `Start-Process wt.exe` per group, so one window per group, with one
@@ -280,9 +280,9 @@ truth.
 # Daily durable snapshot of ~/.claude/projects (Anthropic prunes it)
 30 4 * * * /home/michael/scripts/claude-session-snapshot.sh [...]
 [...]
-# Stop agent sessions idle >4d (reaper class stale-agent, #384). Runs after the 4:30 snapshot so transcripts are archived first.
+# Stop agent sessions idle >4d [...] Runs after the 4:30 snapshot so transcripts are archived first.
 [...]
-0 5 * * * [...] ${R1}/scripts/root-tools/reaper.py [...]
+0 5 * * * [...] ${R1}/scripts/[...]
 [...]
 # [...] monthly workflow refresh [...]
 # claude -p with a $25 cap and 60 min timeout; commits to staging, exits 1 without committing on any failure.

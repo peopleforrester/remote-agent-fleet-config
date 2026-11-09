@@ -10,7 +10,7 @@ listener will compare it with. Each link was opened and read on 2026-11-09.
 - **Tailscale**, a private network between your machines, so the box needs no public ssh port: https://tailscale.com/kb/1017/install
 - **mosh**, the alternative to the reconnect loop: it keeps a terminal alive across roaming and sleep, over UDP: https://mosh.org/
 - **asciinema**, which recorded the talk's terminal clips: https://docs.asciinema.org/
-- **Claude Code hooks**, the `PreToolUse` and `Stop` checks in tip 1: https://code.claude.com/docs/en/hooks
+- **Claude Code hooks**, the `PreToolUse` and `Stop` checks in tip 2: https://code.claude.com/docs/en/hooks
 - **Claude Code login on a machine without a browser**, `claude setup-token` and `CLAUDE_CODE_OAUTH_TOKEN`: https://code.claude.com/docs/en/authentication
 - **Codex CLI login with a device code**, `codex login --device-auth`: https://learn.chatgpt.com/docs/auth
 

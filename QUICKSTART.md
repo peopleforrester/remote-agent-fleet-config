@@ -68,7 +68,7 @@ chmod 600 ~/.ssh/config
 ssh box true && echo "box: connected"
 ```
 
-## 3. The box: tmux that follows your screen, and a repo tree (tips 2 and 3)
+## 3. The box: tmux that follows your screen, and a repo tree (tips 1 and 3)
 
 Run the rest of the box steps as `dev`: `ssh box` from your laptop.
 
@@ -91,7 +91,7 @@ git init -q ~/repos/work/api
 ls -d ~/repos/*/*
 ```
 
-## 4. The box: the agent, and one check on what it runs (tip 1)
+## 4. The box: the agent, and one check on what it runs (tip 2)
 
 Install the agent as `dev`:
 
@@ -160,7 +160,7 @@ The last line should print `guard: blocked: git push origin main` and
 `exit 2`. This writes a fresh `~/.claude/settings.json`; on a box that
 already has one, add the `hooks` block to it instead.
 
-## 5. Your laptop: one alias per repo, generated (tip 2)
+## 5. Your laptop: one alias per repo, generated (tip 1)
 
 A script lists the box's repo tree and writes one alias per repo, named group
 dash repo, into `~/.box-sessions`. Cron reruns it every 30 minutes, so a repo
