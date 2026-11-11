@@ -78,7 +78,7 @@ alias portfolio-agentic-covenants='ncs portfolio-agentic-covenants /home/michael
   30 minutes, so a repo cloned in the morning has an alias by lunch.
 - Leave a directory out by dropping a `.no-terminal` file in it.
 
-## Tip 2: Master one workflow before you run a hundred
+## Tip 2: Master one workflow
 
 ### What it fixes
 
@@ -122,7 +122,7 @@ and hooks that check what the agent does as it does it.
   session starts its own copy of every stdio MCP server it is configured
   with, so a hundred sessions run a hundred copies.
 
-## Tip 3: Get your agents off your laptop
+## Tip 3: Move to one box
 
 ### What it fixes
 
@@ -266,7 +266,7 @@ restore() {
 - On another terminal, keep the idea: generate one tab per session from the
   same list, and make each tab run `ncs`.
 
-## Tip 5: From workflows to a dispatcher
+## Tip 5: Dispatch the work
 
 ### What it fixes
 
