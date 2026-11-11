@@ -1,8 +1,10 @@
-# ABOUTME: Excerpt of the Claude Code hooks in ~/.claude/settings.json: a check before shell commands, tests on stop.
+# ABOUTME: Excerpt of the Claude Code hooks in ~/.claude/settings.json: a safety check before every tool call, tests on stop.
 # ABOUTME: [...] marks skipped lines, or skipped text inside a line. See the README.
-        "matcher": "Bash",
+    "PreToolUse": [
+      {
+        "matcher": "",
 [...]
-            "command": "$HOME/.claude/hooks/check-commit-message.sh"
+            "command": "$HOME/.claude/hooks/safety-net.sh",
 [...]
     "Stop": [
 [...]

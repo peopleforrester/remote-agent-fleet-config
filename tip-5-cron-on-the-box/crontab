@@ -5,7 +5,7 @@
 [...]
 # Stop agent sessions idle >4d [...] Runs after the 4:30 snapshot so transcripts are archived first.
 [...]
-0 5 * * * [...] ${R1}/scripts/[...]
+0 5 * * * [...] ${R1}/scripts/root-tools/reaper.py [...]
 [...]
 # [...] monthly workflow refresh [...]
 # claude -p with a $25 cap and 60 min timeout; commits to staging, exits 1 without committing on any failure.

@@ -93,9 +93,11 @@ and hooks that check what the agent does as it does it.
 [`tip-2-one-workflow/settings.json`](tip-2-one-workflow/settings.json)
 
 ```json
-        "matcher": "Bash",
+    "PreToolUse": [
+      {
+        "matcher": "",
 [...]
-            "command": "$HOME/.claude/hooks/check-commit-message.sh"
+            "command": "$HOME/.claude/hooks/safety-net.sh",
 [...]
     "Stop": [
 [...]
@@ -105,10 +107,15 @@ and hooks that check what the agent does as it does it.
 ### How to adapt it
 
 - These are Claude Code hooks in `~/.claude/settings.json`. A `PreToolUse`
-  hook with the matcher `Bash` runs before every shell command the agent
-  issues, and can block it.
-- `check-commit-message.sh` refuses a commit message that credits the AI.
-  Write the checks your own repos need; the shape is the same.
+  hook runs before a tool call and can block it. An empty matcher means every
+  tool; the matcher `Bash` means shell commands only.
+- `safety-net.sh` is the guardrail. It reads each command before it runs and
+  refuses a recursive delete outside the working directory, a forced branch
+  delete, a forced push and a hard reset. A delete inside the working
+  directory still goes through.
+- Write the checks your own repos need; the shape is the same. The quickstart
+  builds a small one that refuses a push to `main`, a force push and
+  `rm -rf` on the root or home directory.
 - A `Stop` hook runs when the agent finishes; running the tests there catches
   a break before you look.
 - Where a command-line tool exists, prefer it to an MCP server. Each agent
@@ -282,7 +289,7 @@ truth.
 [...]
 # Stop agent sessions idle >4d [...] Runs after the 4:30 snapshot so transcripts are archived first.
 [...]
-0 5 * * * [...] ${R1}/scripts/[...]
+0 5 * * * [...] ${R1}/scripts/root-tools/reaper.py [...]
 [...]
 # [...] monthly workflow refresh [...]
 # claude -p with a $25 cap and 60 min timeout; commits to staging, exits 1 without committing on any failure.
