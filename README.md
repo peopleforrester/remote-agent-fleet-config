@@ -12,8 +12,9 @@ are labeled as on the slides: **alpha** is the always-on host, **beta** and
 **right** are the workstations.
 
 For a complete setup you can run, from one empty Debian 13 server to tip 5 in
-about 30 minutes, follow [the quickstart](QUICKSTART.md). The tools and the
-hosted options to compare with are in [RESOURCES.md](RESOURCES.md).
+about 30 minutes, follow [the quickstart](QUICKSTART.md). The five tips as
+commands, on one page, are in [the cheat sheet](CHEATSHEET.md). The tools and
+the hosted options to compare with are in [RESOURCES.md](RESOURCES.md).
 
 ## Reading the excerpts
 
